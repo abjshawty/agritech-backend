@@ -1,0 +1,122 @@
+[
+  {
+    "id": "maize",
+    "name": { "fr": "Maïs", "en": "Maize" },
+    "kind": "annual",
+    "cycleMonths": 4,
+    "temp": { "optimal": [20, 30], "absolute": [12, 38] },
+    "rain": { "optimal": [500, 1000], "absolute": [300, 1600] },
+    "ph": { "optimal": [5.5, 7.0], "absolute": [4.5, 8.5] },
+    "textures": ["sandy_loam", "loam", "clay_loam"]
+  },
+  {
+    "id": "rice",
+    "name": { "fr": "Riz pluvial", "en": "Upland rice" },
+    "kind": "annual",
+    "cycleMonths": 4,
+    "temp": { "optimal": [22, 32], "absolute": [15, 38] },
+    "rain": { "optimal": [800, 1500], "absolute": [500, 2500] },
+    "ph": { "optimal": [5.0, 7.0], "absolute": [4.0, 8.0] },
+    "textures": ["loam", "clay_loam", "clay"]
+  },
+  {
+    "id": "yam",
+    "name": { "fr": "Igname", "en": "Yam" },
+    "kind": "annual",
+    "cycleMonths": 8,
+    "temp": { "optimal": [25, 30], "absolute": [18, 35] },
+    "rain": { "optimal": [1000, 1500], "absolute": [600, 2500] },
+    "ph": { "optimal": [5.5, 6.5], "absolute": [4.5, 8.0] },
+    "textures": ["sandy_loam", "loam"]
+  },
+  {
+    "id": "cassava",
+    "name": { "fr": "Manioc", "en": "Cassava" },
+    "kind": "annual",
+    "cycleMonths": 10,
+    "temp": { "optimal": [22, 32], "absolute": [15, 38] },
+    "rain": { "optimal": [1000, 1500], "absolute": [500, 3000] },
+    "ph": { "optimal": [5.0, 7.0], "absolute": [4.0, 8.0] },
+    "textures": ["sand", "sandy_loam", "loam"]
+  },
+  {
+    "id": "groundnut",
+    "name": { "fr": "Arachide", "en": "Groundnut" },
+    "kind": "annual",
+    "cycleMonths": 4,
+    "temp": { "optimal": [22, 30], "absolute": [15, 38] },
+    "rain": { "optimal": [500, 1000], "absolute": [300, 1500] },
+    "ph": { "optimal": [5.5, 7.0], "absolute": [4.5, 8.0] },
+    "textures": ["sand", "sandy_loam", "loam"]
+  },
+  {
+    "id": "cotton",
+    "name": { "fr": "Coton", "en": "Cotton" },
+    "kind": "annual",
+    "cycleMonths": 5,
+    "temp": { "optimal": [22, 32], "absolute": [15, 40] },
+    "rain": { "optimal": [600, 1200], "absolute": [400, 1800] },
+    "ph": { "optimal": [5.5, 8.0], "absolute": [4.5, 8.5] },
+    "textures": ["sandy_loam", "loam", "clay_loam"]
+  },
+  {
+    "id": "cocoa",
+    "name": { "fr": "Cacao", "en": "Cocoa" },
+    "kind": "perennial",
+    "temp": { "optimal": [24, 28], "absolute": [18, 32] },
+    "rain": { "optimal": [1500, 2500], "absolute": [1100, 3500] },
+    "ph": { "optimal": [6.0, 7.0], "absolute": [4.5, 8.0] },
+    "dryMonths": { "optimal": [0, 3], "absolute": [0, 5] },
+    "textures": ["loam", "clay_loam"]
+  },
+  {
+    "id": "coffee",
+    "name": { "fr": "Café robusta", "en": "Robusta coffee" },
+    "kind": "perennial",
+    "temp": { "optimal": [22, 28], "absolute": [16, 32] },
+    "rain": { "optimal": [1500, 2500], "absolute": [1000, 3500] },
+    "ph": { "optimal": [5.5, 6.5], "absolute": [4.5, 7.5] },
+    "dryMonths": { "optimal": [0, 3], "absolute": [0, 5] },
+    "textures": ["sandy_loam", "loam", "clay_loam"]
+  },
+  {
+    "id": "cashew",
+    "name": { "fr": "Anacarde", "en": "Cashew" },
+    "kind": "perennial",
+    "temp": { "optimal": [24, 30], "absolute": [17, 38] },
+    "rain": { "optimal": [800, 1600], "absolute": [500, 3000] },
+    "ph": { "optimal": [5.0, 6.5], "absolute": [4.5, 8.0] },
+    "dryMonths": { "optimal": [3, 6], "absolute": [0, 8] },
+    "textures": ["sand", "sandy_loam", "loam"]
+  },
+  {
+    "id": "oil_palm",
+    "name": { "fr": "Palmier à huile", "en": "Oil palm" },
+    "kind": "perennial",
+    "temp": { "optimal": [25, 30], "absolute": [20, 34] },
+    "rain": { "optimal": [1800, 2500], "absolute": [1200, 4000] },
+    "ph": { "optimal": [5.0, 6.5], "absolute": [4.0, 7.5] },
+    "dryMonths": { "optimal": [0, 2], "absolute": [0, 4] },
+    "textures": ["loam", "clay_loam"]
+  },
+  {
+    "id": "rubber",
+    "name": { "fr": "Hévéa", "en": "Rubber" },
+    "kind": "perennial",
+    "temp": { "optimal": [25, 30], "absolute": [20, 34] },
+    "rain": { "optimal": [1800, 2500], "absolute": [1300, 4000] },
+    "ph": { "optimal": [4.5, 6.0], "absolute": [4.0, 7.0] },
+    "dryMonths": { "optimal": [0, 2], "absolute": [0, 4] },
+    "textures": ["sandy_loam", "loam", "clay_loam"]
+  },
+  {
+    "id": "plantain",
+    "name": { "fr": "Banane plantain", "en": "Plantain" },
+    "kind": "perennial",
+    "temp": { "optimal": [25, 30], "absolute": [16, 35] },
+    "rain": { "optimal": [1500, 2500], "absolute": [1000, 3500] },
+    "ph": { "optimal": [5.5, 7.0], "absolute": [4.5, 8.0] },
+    "dryMonths": { "optimal": [0, 2], "absolute": [0, 4] },
+    "textures": ["loam", "clay_loam"]
+  }
+]

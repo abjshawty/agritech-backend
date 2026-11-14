@@ -1,94 +1,59 @@
-# http
+# agritech-backend
 
-A template for a backend HTTP server: [Bun](https://bun.com), [Elysia](https://elysiajs.com), [Drizzle](https://orm.drizzle.team) and Postgres. It ships one example resource, posts, with full CRUD, pagination, validation, OpenAPI docs and consistent error handling, meant to be copied for your own resources.
+The API behind AGRITECH, Team AKOMA's entry for the NASA Space Apps Challenge (*Field Shift — Adapting Farms with NASA Data*). It tells farmers in Côte d'Ivoire which crops suit their field, scored against recent NASA POWER climate data and SoilGrids soil data.
+
+Built with [Bun](https://bun.com) and [Elysia](https://elysiajs.com), from the [`http`](https://github.com/abjshawty/http) template with the database removed. The frontend is [`agritech-web`](https://github.com/abjshawty/agritech-web).
+
+> **Status: mock data.** `/recommend` runs the real scorer, but every location gets the same Bouaké sample site (`source: "snapshot"`). Live NASA POWER and SoilGrids fetching is next.
 
 ## Getting started
 
-You need Bun 1.3.10 or later and a Postgres server.
+You need Bun 1.3.10 or later.
 
 ```bash
 bun install
-cp .env.example .env    # then fill in DATABASE_URL
-bun db:push             # creates the database if needed, then syncs the schema
-bun dev                 # http://localhost:3000, reloads on change
+cp .env.example .env
+bun dev        # http://localhost:3000/api, reloads on change
+bun test       # scorer tests
+bun check      # type-check
 ```
 
-Open `http://localhost:3000/` and you are redirected to the API docs at `/docs`. The raw OpenAPI spec is at `/docs/json`.
+`http://localhost:3000/api` redirects to the API docs. The OpenAPI spec the frontend generates its types from is at `/api/docs/json`.
 
-### Environment
-
-| Variable       | Required | Default | Purpose                                                        |
-| -------------- | -------- | ------- | -------------------------------------------------------------- |
-| `DATABASE_URL` | yes      |         | `postgresql://<user>:<password>@<host>/<db>`                   |
-| `PORT`         | no       | `3000`  | Port to listen on                                              |
-| `SERVER_PATH`  | no       | `""`    | Prefix in front of every route, docs included (e.g. `/api/v1`) |
-
-Bun loads `.env` automatically.
-
-### Scripts
-
-| Command          | What it does                                                                         |
-| ---------------- | ------------------------------------------------------------------------------------ |
-| `bun dev`        | Runs the server with hot reload                                                      |
-| `bun start`      | Runs the server                                                                      |
-| `bun db:ensure`  | Creates the database named in `DATABASE_URL` if it doesn't exist                     |
-| `bun db:push`    | `db:ensure`, then pushes `src/db/schema.ts` to the database with drizzle-kit         |
-| `bun format`     | Formats `src/` with Prettier                                                          |
-
-To type-check, run `bunx tsc --noEmit`.
+| Variable      | Default | Purpose                                 |
+| ------------- | ------- | --------------------------------------- |
+| `PORT`        | `3000`  | Port to listen on                       |
+| `SERVER_PATH` | `""`    | Prefix in front of every route (`/api`) |
 
 ## API
 
-All routes are documented, with request and response schemas, at `/docs`.
+| Method | Path             | Description                                                                 |
+| ------ | ---------------- | --------------------------------------------------------------------------- |
+| `GET`  | `/api/crops`     | The 12 crop profiles                                                        |
+| `GET`  | `/api/recommend` | `?lat&lon` (within Côte d'Ivoire), optional `plantingMonth` (1–12) and `irrigated` |
 
-| Method   | Path        | Description                                                         | Success |
-| -------- | ----------- | ------------------------------------------------------------------- | ------- |
-| `POST`   | `/post`     | Create a post (`title` required and unique, `body` optional)        | 201     |
-| `GET`    | `/post`     | List posts, newest first; `?page=1&size=20` (size at most 100)      | 200     |
-| `GET`    | `/post/:id` | Get one post                                                        | 200     |
-| `PATCH`  | `/post/:id` | Update any of `title`, `body`, `archived`                           | 200     |
-| `DELETE` | `/post/:id` | Delete a post permanently                                           | 204     |
+`/recommend` returns the site's climate, soil and climate shift, the planting month used, and every crop ranked by score with its verdict, factor scores and reason keys. The full schema is in the docs. The API never sends display text: reasons are keys such as `rain.tooLow` with parameters, translated by the frontend.
 
-The list returns `{ data, page, size, total }`. Titles are trimmed; an empty title is a 400 and a duplicate one is a 409. A malformed id or invalid body is a 422, and an unknown id is a 404.
+## How scoring works
 
-### Errors
+All of it lives in `src/lib/scorer.ts`, a pure function covered by `src/lib/scorer.test.ts`.
 
-Every status a route can return is listed in its docs. Anything else, such as a database failure, becomes a 500 with a generic message and a short reference:
+- **Each factor** (rainfall, temperature, soil pH, and dry-season months for perennials) scores 1 inside the crop's optimal range, falling linearly to 0 at its absolute limit. Soil texture scores 1 if the crop suits it and 0.4 otherwise.
+- **Overall score** = 100 × the geometric mean of the factor scores, so one weak factor drags it down and any 0 makes the crop unsuitable. Good is 70 and up, possible 40–69, poor below 40.
+- **Annual crops** are scored on rainfall and mean temperature over their growing cycle, starting at the planting month. When none is given, it's the next rainy-season onset: the first month with at least 100 mm after a month with less.
+- **Perennials** are scored on the whole year, plus the number of months under 50 mm of rain.
+- **Water deficit** is the rain short of the crop's optimal minimum. With `irrigated=true` the shortfall counts as met, and the deficit is reported as irrigation to plan.
+- **Reasons** are the weakest factor, then the strongest.
 
-```json
-{ "message": "Sorry, an error has occurred in our product. Please relay this to our support.", "error": "3f9a1c2e" }
-```
+## Crop profiles
 
-The full error is logged on the server under that reference. This is deliberate: driver errors can contain SQL and data, so only errors the code explicitly allows reach the client (see `PASS_THROUGH` in `src/lib/error.ts`).
+`data/crops.json` holds one profile per crop: optimal and absolute ranges for temperature (°C), rainfall (mm over the cycle, or per year for perennials) and pH, dry-season months for perennials, and the soil textures it suits.
 
-## Project layout
+> The current values are **first-draft approximations** in the spirit of FAO ECOCROP. The agronomy lead replaces them with sourced figures (ECOCROP, CNRA, ANADER). Change only the numbers; the shape is the API contract.
 
-```
-src/
-├── index.ts              # starts the server
-├── db/
-│   ├── client.ts         # Drizzle client
-│   ├── schema.ts         # tables
-│   └── ensure.ts         # creates the database (used by db:push)
-├── lib/
-│   └── error.ts          # error masking and Postgres error helpers
-└── modules/
-    ├── index.ts          # app: error handler, OpenAPI, module registration
-    └── post/
-        ├── model.ts      # request/response schemas and error messages
-        ├── service.ts    # database access and business rules
-        └── index.ts      # routes and their documentation
-```
+## Deployment
 
-## Adding a resource
-
-Copy `src/modules/post` and follow its shape: schemas and messages in `model.ts`, queries in `service.ts`, routes in `index.ts`. Then:
-
-1. Add the table to `src/db/schema.ts` and run `bun db:push`.
-2. Export the module's `tag` and, in `src/modules/index.ts`, add it to `documentation.tags` and `.use()` the module.
-3. If a route returns a new error status through `status(…)` (anything beyond the 400, 401, 403, 409 and 410 already allowed, e.g. 422), add it to `PASS_THROUGH` in `src/lib/error.ts`, or it will reach the client as a 500.
-
-If you use [Claude Code](https://claude.com/claude-code), the `api-module` skill in `.claude/skills/` covers these conventions and how to test a change against an in-memory Postgres ([PGlite](https://pglite.dev)) without touching your database.
+The `Dockerfile` builds a container that listens on port 3000 under `/api`. In production it sits on an internal Docker network behind the `agritech-web` container, which serves the frontend and proxies `/api`; it never publishes a port of its own. See `agritech-web` for the compose file.
 
 ## License
 

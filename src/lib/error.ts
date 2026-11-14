@@ -1,4 +1,3 @@
-import { DrizzleQueryError } from "drizzle-orm";
 import { Elysia, t } from "elysia";
 
 /**
@@ -19,39 +18,23 @@ export const error_response = t.Object({
 export type error_response = typeof error_response.static;
 
 /**
- * Without this, Elysia's default is `context.response = error.message`, and a
- * driver error's message is the full SQL plus its parameters — so any
- * unhandled throw echoes the schema to the caller.
+ * Without this, Elysia's default is `context.response = error.message`, so any
+ * unhandled throw (an upstream API's error text included) echoes internals to
+ * the caller.
  *
  * Deny by default: everything is masked except the handful of codes whose
- * bodies the routes deliberately document. Allow-listing the failures instead
- * does not work, because Elysia derives `code` from `error.code` when the
- * error carries one — and Postgres driver errors carry the SQLSTATE, so a
- * missing relation that surfaces unwrapped arrives as `42P01` rather than
- * `UNKNOWN` and would slip straight through. Any driver behaves the same way.
+ * bodies the routes deliberately document. Elysia derives `code` from
+ * `error.code` when the error carries one, so allow-listing the failures
+ * instead would let arbitrary library codes slip straight through.
  */
 const PASS_THROUGH = new Set<string | number>([
   "NOT_FOUND", // thrown by the services, and raised by unmatched routes
   "VALIDATION",
   "PARSE",
-  "INVALID_COOKIE_SIGNATURE",
-  "INVALID_FILE_TYPE",
   // `throw status(…)` from the services; their code is the number
   400,
-  401,
-  403,
-  409,
-  410,
+  503, // NASA POWER or SoilGrids unavailable and no snapshot nearby
 ]);
-
-/**
- * Postgres `unique_violation`. Drizzle wraps the driver error in a
- * `DrizzleQueryError`, so the SQLSTATE is on `cause`, not on the error itself.
- * Services catch this and rethrow their own documented 409.
- */
-export const is_unique_violation = (error: unknown) =>
-  error instanceof DrizzleQueryError &&
-  (error.cause as { code?: unknown } | undefined)?.code === "23505";
 
 export const errors = new Elysia({ name: "errors" }).onError(
   { as: "global" },
