@@ -1,16 +1,16 @@
 import { next_onset, score } from "@/lib/scorer";
 import { Service as Crops } from "@/modules/crops/service";
 import { Model } from "./model";
-import { sample_site } from "./site";
+import { get_site } from "./site";
 
 export namespace Service {
-  export const recommend = ({
+  export const recommend = async ({
     lat,
     lon,
     plantingMonth,
     irrigated = Model.default_irrigated,
-  }: Model.recommend_query): Model.recommend_response => {
-    const site = sample_site(lat, lon);
+  }: Model.recommend_query): Promise<Model.recommend_response> => {
+    const { site, source } = await get_site(lat, lon);
     const planting =
       plantingMonth ?? next_onset(site.climate.rain, new Date().getMonth() + 1);
 
@@ -34,7 +34,7 @@ export namespace Service {
       site,
       plantingMonth: planting,
       irrigated,
-      source: "snapshot",
+      source,
       results,
     };
   };

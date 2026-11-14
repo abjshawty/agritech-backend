@@ -117,6 +117,22 @@ export namespace Model {
     ),
   });
 
+  export const source = t.Union(
+    [t.Literal("live"), t.Literal("cache"), t.Literal("snapshot")],
+    {
+      description:
+        "Where the climate data came from: fetched from NASA POWER now, from the cache, or from a saved demo-town snapshot.",
+    },
+  );
+
+  // Errors
+  export const no_soil = t.Literal(
+    "There is no soil data at this point. Pick a point on land.",
+  );
+  export const climate_unavailable = t.Literal(
+    "NASA POWER climate data is unavailable right now. Try again in a moment.",
+  );
+
   // Responses. Whole numbers here are `t.Number`, not `t.Integer`: Elysia
   // documents `t.Integer` as "string or integer", which leaks into the
   // frontend's generated types.
@@ -128,13 +144,7 @@ export namespace Model {
       description: "The planting month used, after applying the default.",
     }),
     irrigated: t.Boolean(),
-    source: t.Union(
-      [t.Literal("live"), t.Literal("cache"), t.Literal("snapshot")],
-      {
-        description:
-          "Where the site data came from: fetched now, from the cache, or from a saved demo-town snapshot.",
-      },
-    ),
+    source,
     results: t.Array(result, { description: "Highest score first." }),
   });
   export const error_response = shared_error_response;
@@ -143,6 +153,9 @@ export namespace Model {
   export type recommend_query = typeof recommend_query.static;
   export type site = typeof site.static;
   export type result = typeof result.static;
+  export type source = typeof source.static;
+  export type no_soil = typeof no_soil.static;
+  export type climate_unavailable = typeof climate_unavailable.static;
   export type recommend_response = typeof recommend_response.static;
   export type error_response = typeof error_response.static;
 }

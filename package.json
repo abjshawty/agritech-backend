@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@types/bun": "latest",
+    "geotiff": "^3.0.5",
     "typescript": "^7.0.2"
   },
   "peerDependencies": {
@@ -44,6 +45,8 @@
     "dev": "bun --hot src/index.ts",
     "test": "bun test",
     "check": "tsc --noEmit -p .",
-    "format": "prettier --write ./src"
+    "format": "prettier --write ./src",
+    "soil:build": "bun scripts/build-soil.ts",
+    "snapshots:build": "bun scripts/build-snapshots.ts"
   }
 }
