@@ -27,7 +27,7 @@ export namespace Model {
     name: t.Object({ fr: t.String(), en: t.String() }),
     kind: t.Union([t.Literal("annual"), t.Literal("perennial")]),
     cycleMonths: t.Optional(
-      t.Integer({
+      t.Number({
         minimum: 1,
         maximum: 12,
         description: "Annual crops only: months from planting to harvest.",

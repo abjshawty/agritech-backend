@@ -48,7 +48,7 @@ export namespace Model {
         rain: months("Mean rainfall per month in mm, January first."),
         tmean: months("Mean temperature per month in °C, January first."),
         annualRain: t.Number({ description: "Total of `rain`, in mm." }),
-        dryMonths: t.Integer({
+        dryMonths: t.Number({
           description: "Months with under 50 mm of rain.",
         }),
       },
@@ -80,7 +80,7 @@ export namespace Model {
   export const result = t.Object({
     cropId: t.String(),
     kind: t.Union([t.Literal("annual"), t.Literal("perennial")]),
-    score: t.Integer({ minimum: 0, maximum: 100 }),
+    score: t.Number({ minimum: 0, maximum: 100, multipleOf: 1 }),
     verdict: t.Union([
       t.Literal("good"),
       t.Literal("possible"),
@@ -117,10 +117,12 @@ export namespace Model {
     ),
   });
 
-  // Responses
+  // Responses. Whole numbers here are `t.Number`, not `t.Integer`: Elysia
+  // documents `t.Integer` as "string or integer", which leaks into the
+  // frontend's generated types.
   export const recommend_response = t.Object({
     site,
-    plantingMonth: t.Integer({
+    plantingMonth: t.Number({
       minimum: 1,
       maximum: 12,
       description: "The planting month used, after applying the default.",
