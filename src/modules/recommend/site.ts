@@ -72,6 +72,7 @@ export const get_site = async (lat: number, lon: number) => {
     climate: {
       rain: climate.rain,
       tmean: climate.tmean,
+      wetness: climate.wetness,
       annualRain: Math.round(climate.rain.reduce((a, b) => a + b, 0)),
       dryMonths: climate.rain.filter((mm) => mm < DRY_MONTH_MM).length,
     },

@@ -8,6 +8,8 @@ Built with [Bun](https://bun.com) and [Elysia](https://elysiajs.com), from the [
 
 - **Climate:** [NASA POWER](https://power.larc.nasa.gov) monthly rainfall (`PRECTOTCORR_SUM`) and temperature (`T2M`), fetched live in one call for 1984–2023. Scoring uses the 2014–2023 monthly means; the Field Shift badge compares them with 1984–1993. Results are cached per 0.1° cell for the life of the process.
 - **Soil:** [SoilGrids 2.0](https://soilgrids.org) pH, sand, clay and organic carbon, averaged over 0–30 cm. Its point API is too slow and too often empty to call per request, so `bun soil:build` downloads the maps for the whole country once into `data/soil-grid.json` (0.05° grid, about 5.5 km), and lookups are local.
+- **Soil moisture:** NASA POWER root-zone soil wetness (`GWETROOT`, 0 dry to 1 saturated) comes in the same call. Each crop gets the mean over its months as `moisture`; it's shown, not scored.
+- **Second opinion:** [FAO GAEZ v4](https://gaez.fao.org) crop suitability (1981–2010, rain-fed, low input), downloaded once by `bun gaez:build` into `data/gaez-grid.json`. Each crop gets `gaez` (0–100) beside our own `score`; GAEZ has no cashew or rubber, and banana stands in for plantain.
 - **Fallback:** if NASA POWER fails or takes over 8 s, points within 25 km of Abidjan, Bouaké, Korhogo, San-Pédro or Man get that town's saved climate from `data/snapshots.json` (`source: "snapshot"`). Anywhere else gets a 503. Rebuild the snapshots with `bun snapshots:build`.
 
 ## Getting started
@@ -22,6 +24,7 @@ bun test       # scorer tests
 bun check      # type-check
 bun soil:build       # rebuild data/soil-grid.json from SoilGrids
 bun snapshots:build  # rebuild data/snapshots.json from NASA POWER
+bun gaez:build       # rebuild data/gaez-grid.json from FAO GAEZ
 ```
 
 `http://localhost:3000/api` redirects to the API docs. The OpenAPI spec the frontend generates its types from is at `/api/docs/json`.

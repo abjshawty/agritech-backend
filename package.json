@@ -47,6 +47,7 @@
     "check": "tsc --noEmit -p .",
     "format": "prettier --write ./src",
     "soil:build": "bun scripts/build-soil.ts",
-    "snapshots:build": "bun scripts/build-snapshots.ts"
+    "snapshots:build": "bun scripts/build-snapshots.ts",
+    "gaez:build": "bun scripts/build-gaez.ts"
   }
 }

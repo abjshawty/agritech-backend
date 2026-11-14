@@ -35,8 +35,9 @@ const cell = (row: number, col: number): soil | null => {
  * Null when nothing is mapped that close.
  */
 export const soil_at = (lat: number, lon: number): soil | null => {
-  const row = Math.round((lat - lat0) / step);
-  const col = Math.round((lon - lon0) / step);
+  // lat0/lon0 are the grid's south-west corner, so floor finds the containing cell.
+  const row = Math.floor((lat - lat0) / step);
+  const col = Math.floor((lon - lon0) / step);
   for (let r = 0; r <= SEARCH_CELLS; r++)
     for (let dr = -r; dr <= r; dr++)
       for (let dc = -r; dc <= r; dc++) {

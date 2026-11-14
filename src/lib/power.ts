@@ -1,5 +1,5 @@
 /**
- * Monthly climate from NASA POWER (https://power.larc.nasa.gov), agroclimatology
+ * Monthly climate and root-zone soil wetness from NASA POWER (https://power.larc.nasa.gov), agroclimatology
  * community. One call covers 1984–2023: the recent decade feeds the scoring and
  * the first decade is the baseline for the Field Shift comparison.
  */
@@ -12,7 +12,8 @@ export const TIMEOUT_MS = 8000;
 export type climate = {
   rain: number[]; // mm per month, January first, mean over RECENT
   tmean: number[]; // °C per month, January first, mean over RECENT
-  shift: { rainPct: number; tempDelta: number }; // RECENT vs BASELINE
+  wetness: number[]; // root-zone soil wetness per month, 0 (dry) to 1 (saturated), mean over RECENT
+  shift: { rainPct: number; tempDelta: number; wetnessDelta: number }; // RECENT vs BASELINE
 };
 
 type power_response = {
@@ -20,12 +21,14 @@ type power_response = {
     parameter: {
       PRECTOTCORR_SUM: Record<string, number>; // monthly total in mm, despite the "mm/day" label
       T2M: Record<string, number>;
+      GWETROOT: Record<string, number>;
     };
   };
   header: { fill_value: number };
 };
 
 const round1 = (n: number) => Math.round(n * 10) / 10;
+const round2 = (n: number) => Math.round(n * 100) / 100;
 
 /** Mean per calendar month over [from, to], skipping fill values. */
 const monthly_means = (
@@ -53,7 +56,7 @@ export const fetch_climate = async (
 ): Promise<climate> => {
   const url = new URL("https://power.larc.nasa.gov/api/temporal/monthly/point");
   url.search = new URLSearchParams({
-    parameters: "PRECTOTCORR_SUM,T2M",
+    parameters: "PRECTOTCORR_SUM,T2M,GWETROOT",
     community: "AG",
     latitude: lat.toFixed(4),
     longitude: lon.toFixed(4),
@@ -67,22 +70,30 @@ export const fetch_climate = async (
   });
   if (!response.ok) throw new Error(`NASA POWER: HTTP ${response.status}`);
   const body = (await response.json()) as power_response;
-  const { PRECTOTCORR_SUM: rain, T2M: temp } = body.properties.parameter;
+  const {
+    PRECTOTCORR_SUM: rain,
+    T2M: temp,
+    GWETROOT: wet,
+  } = body.properties.parameter;
   const fill = body.header.fill_value;
 
   const recent_rain = monthly_means(rain, RECENT, fill);
   const recent_temp = monthly_means(temp, RECENT, fill);
   const base_rain = monthly_means(rain, BASELINE, fill);
   const base_temp = monthly_means(temp, BASELINE, fill);
+  const recent_wet = monthly_means(wet, RECENT, fill);
+  const base_wet = monthly_means(wet, BASELINE, fill);
 
   return {
     rain: recent_rain.map(round1),
     tmean: recent_temp.map(round1),
+    wetness: recent_wet.map(round2),
     shift: {
       rainPct: round1(
         ((sum(recent_rain) - sum(base_rain)) / sum(base_rain)) * 100,
       ),
       tempDelta: round1(mean(recent_temp) - mean(base_temp)),
+      wetnessDelta: round2(mean(recent_wet) - mean(base_wet)),
     },
   };
 };

@@ -47,6 +47,9 @@ export namespace Model {
       {
         rain: months("Mean rainfall per month in mm, January first."),
         tmean: months("Mean temperature per month in °C, January first."),
+        wetness: months(
+          "Root-zone soil wetness per month, 0 (dry) to 1 (saturated), January first.",
+        ),
         annualRain: t.Number({ description: "Total of `rain`, in mm." }),
         dryMonths: t.Number({
           description: "Months with under 50 mm of rain.",
@@ -70,6 +73,9 @@ export namespace Model {
           description: "Change in annual rainfall, percent.",
         }),
         tempDelta: t.Number({ description: "Change in mean temperature, °C." }),
+        wetnessDelta: t.Number({
+          description: "Change in mean root-zone soil wetness (0–1 scale).",
+        }),
       },
       { description: "2014–2023 compared with 1984–1993." },
     ),
@@ -86,6 +92,20 @@ export namespace Model {
       t.Literal("possible"),
       t.Literal("poor"),
     ]),
+    moisture: t.Number({
+      minimum: 0,
+      maximum: 1,
+      description:
+        "Mean root-zone soil wetness over the crop's months (the growing cycle, or the year for perennials), 0 dry to 1 saturated. Shown, not scored.",
+    }),
+    gaez: t.Nullable(
+      t.Number({
+        minimum: 0,
+        maximum: 100,
+        description:
+          "FAO GAEZ v4 suitability here (1981–2010, rain-fed, low input), 0–100: an independent second opinion, not part of `score`. Null for crops GAEZ doesn't cover (cashew, rubber).",
+      }),
+    ),
     waterDeficitMm: t.Number({
       description:
         "Rain short of the crop's optimal minimum, in mm; 0 when there is enough.",
