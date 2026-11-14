@@ -51,6 +51,10 @@ export namespace Model {
     textures: t.Array(texture, {
       description: "Soil textures the crop is suited to.",
     }),
+    source: t.String({
+      description:
+        "Where the ranges come from, e.g. `FAO ECOCROP: Zea mays ssp. mays`.",
+    }),
   });
 
   // Responses

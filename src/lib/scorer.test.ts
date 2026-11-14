@@ -89,7 +89,7 @@ describe("score", () => {
   });
 
   test("an unsuited texture lowers the score without zeroing it", () => {
-    const r = score(crop("yam"), { ...south, texture: "clay" }, 3, false);
+    const r = score(crop("yam"), { ...south, texture: "sand" }, 3, false);
     expect(r.score).toBeGreaterThan(0);
     expect(r.factors.find((f) => f.key === "texture")!.score).toBe(0.4);
   });

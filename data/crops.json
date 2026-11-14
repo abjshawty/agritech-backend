@@ -1,122 +1,601 @@
 [
   {
     "id": "maize",
-    "name": { "fr": "Maïs", "en": "Maize" },
+    "name": {
+      "fr": "Maïs",
+      "en": "Maize"
+    },
     "kind": "annual",
     "cycleMonths": 4,
-    "temp": { "optimal": [20, 30], "absolute": [12, 38] },
-    "rain": { "optimal": [500, 1000], "absolute": [300, 1600] },
-    "ph": { "optimal": [5.5, 7.0], "absolute": [4.5, 8.5] },
-    "textures": ["sandy_loam", "loam", "clay_loam"]
+    "temp": {
+      "optimal": [
+        18,
+        33
+      ],
+      "absolute": [
+        10,
+        47
+      ]
+    },
+    "rain": {
+      "optimal": [
+        600,
+        1200
+      ],
+      "absolute": [
+        400,
+        1800
+      ]
+    },
+    "ph": {
+      "optimal": [
+        5,
+        7
+      ],
+      "absolute": [
+        4.5,
+        8.5
+      ]
+    },
+    "textures": [
+      "sandy_loam",
+      "loam",
+      "clay_loam"
+    ],
+    "source": "FAO ECOCROP: Zea mays ssp. mays"
   },
   {
     "id": "rice",
-    "name": { "fr": "Riz pluvial", "en": "Upland rice" },
+    "name": {
+      "fr": "Riz pluvial",
+      "en": "Upland rice"
+    },
     "kind": "annual",
     "cycleMonths": 4,
-    "temp": { "optimal": [22, 32], "absolute": [15, 38] },
-    "rain": { "optimal": [800, 1500], "absolute": [500, 2500] },
-    "ph": { "optimal": [5.0, 7.0], "absolute": [4.0, 8.0] },
-    "textures": ["loam", "clay_loam", "clay"]
+    "temp": {
+      "optimal": [
+        26,
+        32
+      ],
+      "absolute": [
+        16,
+        38
+      ]
+    },
+    "rain": {
+      "optimal": [
+        1000,
+        1500
+      ],
+      "absolute": [
+        700,
+        2700
+      ]
+    },
+    "ph": {
+      "optimal": [
+        5.5,
+        7
+      ],
+      "absolute": [
+        4.3,
+        9
+      ]
+    },
+    "textures": [
+      "sandy_loam",
+      "loam",
+      "clay_loam"
+    ],
+    "source": "FAO ECOCROP: Oryza glaberrima"
   },
   {
     "id": "yam",
-    "name": { "fr": "Igname", "en": "Yam" },
+    "name": {
+      "fr": "Igname",
+      "en": "Yam"
+    },
     "kind": "annual",
     "cycleMonths": 8,
-    "temp": { "optimal": [25, 30], "absolute": [18, 35] },
-    "rain": { "optimal": [1000, 1500], "absolute": [600, 2500] },
-    "ph": { "optimal": [5.5, 6.5], "absolute": [4.5, 8.0] },
-    "textures": ["sandy_loam", "loam"]
+    "temp": {
+      "optimal": [
+        25,
+        32
+      ],
+      "absolute": [
+        15,
+        38
+      ]
+    },
+    "rain": {
+      "optimal": [
+        1000,
+        1500
+      ],
+      "absolute": [
+        800,
+        3000
+      ]
+    },
+    "ph": {
+      "optimal": [
+        6.4,
+        6.7
+      ],
+      "absolute": [
+        5.8,
+        8.5
+      ]
+    },
+    "textures": [
+      "clay_loam",
+      "clay"
+    ],
+    "source": "FAO ECOCROP: Dioscorea rotundata"
   },
   {
     "id": "cassava",
-    "name": { "fr": "Manioc", "en": "Cassava" },
+    "name": {
+      "fr": "Manioc",
+      "en": "Cassava"
+    },
     "kind": "annual",
     "cycleMonths": 10,
-    "temp": { "optimal": [22, 32], "absolute": [15, 38] },
-    "rain": { "optimal": [1000, 1500], "absolute": [500, 3000] },
-    "ph": { "optimal": [5.0, 7.0], "absolute": [4.0, 8.0] },
-    "textures": ["sand", "sandy_loam", "loam"]
+    "temp": {
+      "optimal": [
+        20,
+        29
+      ],
+      "absolute": [
+        10,
+        35
+      ]
+    },
+    "rain": {
+      "optimal": [
+        1000,
+        1500
+      ],
+      "absolute": [
+        500,
+        5000
+      ]
+    },
+    "ph": {
+      "optimal": [
+        5.5,
+        8
+      ],
+      "absolute": [
+        4,
+        9
+      ]
+    },
+    "textures": [
+      "sandy_loam",
+      "loam",
+      "clay_loam",
+      "sand"
+    ],
+    "source": "FAO ECOCROP: Manihot esculenta"
   },
   {
     "id": "groundnut",
-    "name": { "fr": "Arachide", "en": "Groundnut" },
+    "name": {
+      "fr": "Arachide",
+      "en": "Groundnut"
+    },
     "kind": "annual",
     "cycleMonths": 4,
-    "temp": { "optimal": [22, 30], "absolute": [15, 38] },
-    "rain": { "optimal": [500, 1000], "absolute": [300, 1500] },
-    "ph": { "optimal": [5.5, 7.0], "absolute": [4.5, 8.0] },
-    "textures": ["sand", "sandy_loam", "loam"]
+    "temp": {
+      "optimal": [
+        22,
+        32
+      ],
+      "absolute": [
+        10,
+        45
+      ]
+    },
+    "rain": {
+      "optimal": [
+        600,
+        1500
+      ],
+      "absolute": [
+        400,
+        4000
+      ]
+    },
+    "ph": {
+      "optimal": [
+        5.5,
+        6.5
+      ],
+      "absolute": [
+        4.5,
+        8.5
+      ]
+    },
+    "textures": [
+      "sandy_loam",
+      "loam",
+      "clay_loam"
+    ],
+    "source": "FAO ECOCROP: Arachis hypogaea"
   },
   {
     "id": "cotton",
-    "name": { "fr": "Coton", "en": "Cotton" },
+    "name": {
+      "fr": "Coton",
+      "en": "Cotton"
+    },
     "kind": "annual",
     "cycleMonths": 5,
-    "temp": { "optimal": [22, 32], "absolute": [15, 40] },
-    "rain": { "optimal": [600, 1200], "absolute": [400, 1800] },
-    "ph": { "optimal": [5.5, 8.0], "absolute": [4.5, 8.5] },
-    "textures": ["sandy_loam", "loam", "clay_loam"]
+    "temp": {
+      "optimal": [
+        22,
+        36
+      ],
+      "absolute": [
+        15,
+        42
+      ]
+    },
+    "rain": {
+      "optimal": [
+        750,
+        1200
+      ],
+      "absolute": [
+        450,
+        1500
+      ]
+    },
+    "ph": {
+      "optimal": [
+        6,
+        7.5
+      ],
+      "absolute": [
+        5,
+        9.5
+      ]
+    },
+    "textures": [
+      "clay_loam",
+      "clay",
+      "sandy_loam",
+      "loam"
+    ],
+    "source": "FAO ECOCROP: Gossypium hirsutum"
   },
   {
     "id": "cocoa",
-    "name": { "fr": "Cacao", "en": "Cocoa" },
+    "name": {
+      "fr": "Cacao",
+      "en": "Cocoa"
+    },
     "kind": "perennial",
-    "temp": { "optimal": [24, 28], "absolute": [18, 32] },
-    "rain": { "optimal": [1500, 2500], "absolute": [1100, 3500] },
-    "ph": { "optimal": [6.0, 7.0], "absolute": [4.5, 8.0] },
-    "dryMonths": { "optimal": [0, 3], "absolute": [0, 5] },
-    "textures": ["loam", "clay_loam"]
+    "temp": {
+      "optimal": [
+        21,
+        32
+      ],
+      "absolute": [
+        10,
+        38
+      ]
+    },
+    "rain": {
+      "optimal": [
+        1200,
+        3000
+      ],
+      "absolute": [
+        900,
+        7600
+      ]
+    },
+    "ph": {
+      "optimal": [
+        5,
+        6.5
+      ],
+      "absolute": [
+        4,
+        8
+      ]
+    },
+    "dryMonths": {
+      "optimal": [
+        0,
+        3
+      ],
+      "absolute": [
+        0,
+        5
+      ]
+    },
+    "textures": [
+      "clay_loam",
+      "clay"
+    ],
+    "source": "FAO ECOCROP: Theobroma cacao"
   },
   {
     "id": "coffee",
-    "name": { "fr": "Café robusta", "en": "Robusta coffee" },
+    "name": {
+      "fr": "Café robusta",
+      "en": "Robusta coffee"
+    },
     "kind": "perennial",
-    "temp": { "optimal": [22, 28], "absolute": [16, 32] },
-    "rain": { "optimal": [1500, 2500], "absolute": [1000, 3500] },
-    "ph": { "optimal": [5.5, 6.5], "absolute": [4.5, 7.5] },
-    "dryMonths": { "optimal": [0, 3], "absolute": [0, 5] },
-    "textures": ["sandy_loam", "loam", "clay_loam"]
+    "temp": {
+      "optimal": [
+        20,
+        30
+      ],
+      "absolute": [
+        12,
+        36
+      ]
+    },
+    "rain": {
+      "optimal": [
+        1700,
+        3000
+      ],
+      "absolute": [
+        900,
+        4000
+      ]
+    },
+    "ph": {
+      "optimal": [
+        5,
+        6.3
+      ],
+      "absolute": [
+        4,
+        8
+      ]
+    },
+    "dryMonths": {
+      "optimal": [
+        0,
+        3
+      ],
+      "absolute": [
+        0,
+        5
+      ]
+    },
+    "textures": [
+      "clay_loam",
+      "clay",
+      "sandy_loam",
+      "loam"
+    ],
+    "source": "FAO ECOCROP: Coffea canephora"
   },
   {
     "id": "cashew",
-    "name": { "fr": "Anacarde", "en": "Cashew" },
+    "name": {
+      "fr": "Anacarde",
+      "en": "Cashew"
+    },
     "kind": "perennial",
-    "temp": { "optimal": [24, 30], "absolute": [17, 38] },
-    "rain": { "optimal": [800, 1600], "absolute": [500, 3000] },
-    "ph": { "optimal": [5.0, 6.5], "absolute": [4.5, 8.0] },
-    "dryMonths": { "optimal": [3, 6], "absolute": [0, 8] },
-    "textures": ["sand", "sandy_loam", "loam"]
+    "temp": {
+      "optimal": [
+        15,
+        35
+      ],
+      "absolute": [
+        5,
+        46
+      ]
+    },
+    "rain": {
+      "optimal": [
+        750,
+        1600
+      ],
+      "absolute": [
+        400,
+        4000
+      ]
+    },
+    "ph": {
+      "optimal": [
+        4.5,
+        6.5
+      ],
+      "absolute": [
+        3.8,
+        8.7
+      ]
+    },
+    "dryMonths": {
+      "optimal": [
+        3,
+        6
+      ],
+      "absolute": [
+        0,
+        8
+      ]
+    },
+    "textures": [
+      "sandy_loam",
+      "loam",
+      "clay_loam",
+      "sand"
+    ],
+    "source": "FAO ECOCROP: Anacardium occidentale"
   },
   {
     "id": "oil_palm",
-    "name": { "fr": "Palmier à huile", "en": "Oil palm" },
+    "name": {
+      "fr": "Palmier à huile",
+      "en": "Oil palm"
+    },
     "kind": "perennial",
-    "temp": { "optimal": [25, 30], "absolute": [20, 34] },
-    "rain": { "optimal": [1800, 2500], "absolute": [1200, 4000] },
-    "ph": { "optimal": [5.0, 6.5], "absolute": [4.0, 7.5] },
-    "dryMonths": { "optimal": [0, 2], "absolute": [0, 4] },
-    "textures": ["loam", "clay_loam"]
+    "temp": {
+      "optimal": [
+        20,
+        35
+      ],
+      "absolute": [
+        12,
+        38
+      ]
+    },
+    "rain": {
+      "optimal": [
+        1500,
+        3000
+      ],
+      "absolute": [
+        1000,
+        8000
+      ]
+    },
+    "ph": {
+      "optimal": [
+        4.5,
+        6
+      ],
+      "absolute": [
+        3.2,
+        8
+      ]
+    },
+    "dryMonths": {
+      "optimal": [
+        0,
+        2
+      ],
+      "absolute": [
+        0,
+        4
+      ]
+    },
+    "textures": [
+      "clay_loam",
+      "clay",
+      "sandy_loam",
+      "loam"
+    ],
+    "source": "FAO ECOCROP: Elaeis guineensis"
   },
   {
     "id": "rubber",
-    "name": { "fr": "Hévéa", "en": "Rubber" },
+    "name": {
+      "fr": "Hévéa",
+      "en": "Rubber"
+    },
     "kind": "perennial",
-    "temp": { "optimal": [25, 30], "absolute": [20, 34] },
-    "rain": { "optimal": [1800, 2500], "absolute": [1300, 4000] },
-    "ph": { "optimal": [4.5, 6.0], "absolute": [4.0, 7.0] },
-    "dryMonths": { "optimal": [0, 2], "absolute": [0, 4] },
-    "textures": ["sandy_loam", "loam", "clay_loam"]
+    "temp": {
+      "optimal": [
+        24,
+        33
+      ],
+      "absolute": [
+        10,
+        45
+      ]
+    },
+    "rain": {
+      "optimal": [
+        2000,
+        4000
+      ],
+      "absolute": [
+        1200,
+        6000
+      ]
+    },
+    "ph": {
+      "optimal": [
+        4.5,
+        6
+      ],
+      "absolute": [
+        3.5,
+        8
+      ]
+    },
+    "dryMonths": {
+      "optimal": [
+        0,
+        2
+      ],
+      "absolute": [
+        0,
+        4
+      ]
+    },
+    "textures": [
+      "sandy_loam",
+      "loam",
+      "clay_loam",
+      "sand"
+    ],
+    "source": "FAO ECOCROP: Hevea brasiliensis"
   },
   {
     "id": "plantain",
-    "name": { "fr": "Banane plantain", "en": "Plantain" },
+    "name": {
+      "fr": "Banane plantain",
+      "en": "Plantain"
+    },
     "kind": "perennial",
-    "temp": { "optimal": [25, 30], "absolute": [16, 35] },
-    "rain": { "optimal": [1500, 2500], "absolute": [1000, 3500] },
-    "ph": { "optimal": [5.5, 7.0], "absolute": [4.5, 8.0] },
-    "dryMonths": { "optimal": [0, 2], "absolute": [0, 4] },
-    "textures": ["loam", "clay_loam"]
+    "temp": {
+      "optimal": [
+        25,
+        35
+      ],
+      "absolute": [
+        15,
+        40
+      ]
+    },
+    "rain": {
+      "optimal": [
+        1400,
+        2400
+      ],
+      "absolute": [
+        1000,
+        5000
+      ]
+    },
+    "ph": {
+      "optimal": [
+        5.5,
+        6.5
+      ],
+      "absolute": [
+        4.5,
+        8
+      ]
+    },
+    "dryMonths": {
+      "optimal": [
+        0,
+        2
+      ],
+      "absolute": [
+        0,
+        4
+      ]
+    },
+    "textures": [
+      "sandy_loam",
+      "loam",
+      "clay_loam",
+      "sand"
+    ],
+    "source": "FAO ECOCROP: Musa acuminata x balbisiana"
   }
 ]
