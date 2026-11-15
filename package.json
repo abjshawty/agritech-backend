@@ -50,6 +50,7 @@
     "snapshots:build": "bun scripts/build-snapshots.ts",
     "gaez:build": "bun scripts/build-gaez.ts",
     "crops:build": "bun scripts/build-crops.ts",
-    "gaez:compare": "bun scripts/compare-gaez.ts"
+    "gaez:compare": "bun scripts/compare-gaez.ts",
+    "e2e": "bun scripts/e2e.ts"
   }
 }

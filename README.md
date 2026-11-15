@@ -27,6 +27,7 @@ bun snapshots:build  # rebuild data/snapshots.json from NASA POWER
 bun gaez:build       # rebuild data/gaez-grid.json from FAO GAEZ
 bun crops:build      # rebuild data/crops.json from FAO ECOCROP
 bun gaez:compare     # compare our verdicts with GAEZ → docs/gaez-comparison.md
+bun e2e [base-url]   # end-to-end checks against a running server (default http://localhost:3000/api)
 ```
 
 `http://localhost:3000/api` redirects to the API docs. The OpenAPI spec the frontend generates its types from is at `/api/docs/json`.
