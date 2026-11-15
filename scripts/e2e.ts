@@ -41,6 +41,20 @@ const get = async (path: string, init?: RequestInit) => {
 
 const rec = (q: string) => get(`/recommend?${q}`);
 
+// Stop early with a fix rather than a wall of failures when the URL is wrong.
+{
+  const probe = await get("/crops").catch(() => null);
+  if (!probe || !Array.isArray(probe.body)) {
+    const origin = new URL(BASE).origin;
+    console.error(
+      `No AGRITECH API at ${BASE} (/crops gave ${probe ? probe.status : "no response"}).\n` +
+        `The base URL must include the server's SERVER_PATH. A server started without a .env\n` +
+        `serves at the root, so try: bun e2e ${origin}`,
+    );
+    process.exit(1);
+  }
+}
+
 // --- Docs ---------------------------------------------------------------
 {
   const root = await get("/");
@@ -87,6 +101,7 @@ const verdict_for = (s: number) =>
 const no_gaez = new Set(["cashew", "rubber"]);
 const times: number[] = [];
 const problems: string[] = [];
+const fallbacks: string[] = [];
 for (const town of towns) {
   const r = await rec(`lat=${town.lat}&lon=${town.lon}`);
   times.push(r.ms);
@@ -115,7 +130,9 @@ for (const town of towns) {
         why.push(`${x.cropId} factor score`);
       if (x.reasons.length === 0) why.push(`${x.cropId} no reasons`);
     }
-    if (!["live", "cache"].includes(b.source)) why.push(`source ${b.source}`);
+    if (b.source === "snapshot") fallbacks.push(town.name);
+    else if (!["live", "cache"].includes(b.source))
+      why.push(`source ${b.source}`);
   }
   if (why.length) problems.push(`${town.name}: ${why.join(", ")}`);
 }
@@ -125,6 +142,10 @@ check(
   problems.join("; "),
 );
 times.sort((a, b) => a - b);
+if (fallbacks.length)
+  console.log(
+    `  NASA POWER was slow or down for ${fallbacks.length}; served saved climate: ${fallbacks.join(", ")}`,
+  );
 console.log(
   `  response times: median ${times[times.length >> 1]} ms, max ${times.at(-1)} ms`,
 );
@@ -132,11 +153,15 @@ console.log(
 // --- Cache ----------------------------------------------------------------
 {
   const again = await rec("lat=9.46&lon=-5.63");
-  check(
-    again.body.source === "cache" && again.ms < 200,
-    "a repeat request is served from the cache",
-    `${again.body.source}, ${again.ms} ms`,
-  );
+  // Saved climate isn't cached, so the check only means something when POWER answered.
+  if (again.body.source === "snapshot")
+    console.log("- cache check skipped (NASA POWER unavailable)");
+  else
+    check(
+      again.body.source === "cache" && again.ms < 200,
+      "a repeat request is served from the cache",
+      `${again.body.source}, ${again.ms} ms`,
+    );
 }
 
 // --- Planting month and irrigation ---------------------------------------

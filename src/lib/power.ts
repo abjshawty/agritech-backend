@@ -7,7 +7,8 @@
 export const RECENT = [2014, 2023] as const;
 export const BASELINE = [1984, 1993] as const;
 
-export const TIMEOUT_MS = 8000;
+// Calls normally take about 1.5 s (2.1 s worst seen); past this, fall back to a snapshot.
+export const TIMEOUT_MS = 5000;
 
 export type climate = {
   rain: number[]; // mm per month, January first, mean over RECENT

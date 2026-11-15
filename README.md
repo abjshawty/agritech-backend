@@ -10,7 +10,7 @@ Built with [Bun](https://bun.com) and [Elysia](https://elysiajs.com), from the [
 - **Soil:** [SoilGrids 2.0](https://soilgrids.org) pH, sand, clay and organic carbon, averaged over 0–30 cm. Its point API is too slow and too often empty to call per request, so `bun soil:build` downloads the maps for the whole country once into `data/soil-grid.json` (0.05° grid, about 5.5 km), and lookups are local.
 - **Soil moisture:** NASA POWER root-zone soil wetness (`GWETROOT`, 0 dry to 1 saturated) comes in the same call. Each crop gets the mean over its months as `moisture`; it's shown, not scored.
 - **Second opinion:** [FAO GAEZ v4](https://gaez.fao.org) crop suitability (1981–2010, rain-fed, low input), downloaded once by `bun gaez:build` into `data/gaez-grid.json`. Each crop gets `gaez` (0–100) beside our own `score`; GAEZ has no cashew or rubber, and banana stands in for plantain.
-- **Fallback:** if NASA POWER fails or takes over 8 s, points within 25 km of Abidjan, Bouaké, Korhogo, San-Pédro or Man get that town's saved climate from `data/snapshots.json` (`source: "snapshot"`). Anywhere else gets a 503. Rebuild the snapshots with `bun snapshots:build`.
+- **Fallback:** if NASA POWER fails or takes over 5 s, points within 25 km of any of the 30 towns in the picker get that town's saved climate from `data/snapshots.json` (`source: "snapshot"`). Anywhere else gets a 503. Rebuild the snapshots with `bun snapshots:build`.
 
 ## Getting started
 
@@ -44,7 +44,7 @@ bun e2e [base-url]   # end-to-end checks against a running server (default http:
 | `GET`  | `/api/crops`     | The 12 crop profiles                                                        |
 | `GET`  | `/api/recommend` | `?lat&lon` (within Côte d'Ivoire), optional `plantingMonth` (1–12) and `irrigated` |
 
-A point with no mapped soil nearby (the sea, a lagoon) is a 400, and a NASA POWER failure away from a demo town is a 503.
+A point with no mapped soil nearby (the sea, a lagoon) is a 400, and a NASA POWER failure more than 25 km from every town is a 503.
 
 `/recommend` returns the site's climate, soil and climate shift, the planting month used, and every crop ranked by score with its verdict, factor scores and reason keys. The full schema is in the docs. The API never sends display text: reasons are keys such as `rain.tooLow` with parameters, translated by the frontend.
 

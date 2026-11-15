@@ -6,7 +6,7 @@ import { fetch_climate, type climate } from "@/lib/power";
 import { soil_at } from "@/lib/soil";
 import { Model } from "./model";
 
-/** Towns with a saved climate snapshot, served when NASA POWER can't be reached. */
+/** The towns featured in the demo and in docs/gaez-comparison.md. */
 export const DEMO_TOWNS = ["Abidjan", "Bouaké", "Korhogo", "San-Pédro", "Man"];
 const SNAPSHOT_RADIUS_KM = 25;
 
