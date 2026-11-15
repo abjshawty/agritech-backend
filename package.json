@@ -38,7 +38,7 @@
   "packageManager": "bun",
   "engineStrict": true,
   "engines": {
-    "bun": ">=1.3.10"
+    "bun": ">=1.4.4"
   },
   "scripts": {
     "start": "bun src/index.ts",

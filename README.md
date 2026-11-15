@@ -14,7 +14,7 @@ Built with [Bun](https://bun.com) and [Elysia](https://elysiajs.com), from the [
 
 ## Getting started
 
-You need Bun 1.3.10 or later.
+You need Bun 1.4.4 or later (bun.lock is lockfile version 2).
 
 ```bash
 bun install
